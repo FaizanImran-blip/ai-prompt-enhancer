@@ -229,11 +229,21 @@ Return only enhanced prompt.
 
 
 def function_response(model_prompt):
-    response = requests.post(
-        "http://localhost:11434/api/generate",
-        json={"model": MODEL_NAME, "prompt": model_prompt, "stream": False},
-    )
-    return response.json()["response"]
+    try:
+        response = requests.post(
+            "http://localhost:11434/api/generate",
+            json={"model": MODEL_NAME, "prompt": model_prompt, "stream": False},
+            timeout=60,
+        )
+        response.raise_for_status()
+        data = response.json()
+        return data.get("response", "").strip()
+    except requests.exceptions.ConnectionError:
+        return "Error: Ollama server is not running. Run: ollama serve"
+    except requests.exceptions.Timeout:
+        return "Error: Model response timed out."
+    except Exception as e:
+        return f"Error: {e}"
 
 
 def main():
