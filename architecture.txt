@@ -1,0 +1,4 @@
+userinput=> normalization=> chunks=>meta data extraction=>
+
+bug architecture:
+pending:prompt.[pretrain.model],

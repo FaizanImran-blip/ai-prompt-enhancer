@@ -1,0 +1,7 @@
+normalization: 95%
+chunks: 98%
+language detection: 90%
+task_type detection: 85%
+keyword extraction: 82%
+
+overall metadata pipeline: 88-90%
