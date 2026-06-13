@@ -2,3 +2,6 @@ userinput=> normalization=> chunks=>meta data extraction=>
 
 bug architecture:
 pending:prompt.[pretrain.model],
+
+
+Mobile App → Local AI Runtime/Server → Model files → Mobile CPU/RAM

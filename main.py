@@ -1,4 +1,7 @@
 import re
+import requests
+
+MODEL_NAME = "qwen2.5:3b-instruct-q4_K_M"
 
 
 def function_normalization(user_input):
@@ -225,6 +228,14 @@ Return only enhanced prompt.
 """
 
 
+def function_response(model_prompt):
+    response = requests.post(
+        "http://localhost:11434/api/generate",
+        json={"model": MODEL_NAME, "prompt": model_prompt, "stream": False},
+    )
+    return response.json()["response"]
+
+
 def main():
     while True:
         user_input = input("Enter your prompt: ")
@@ -233,6 +244,7 @@ def main():
         chunks = create_chunks(normalization)
         metadata = extract_metadata(user_input, chunks)
         model_prompt = build_prompt(user_input, metadata)
+        ai_response = function_response(model_prompt)
 
         print("\nUser Input:")
         print(user_input)
@@ -244,6 +256,8 @@ def main():
         print(metadata)
         print("\nModel Prompt:")
         print(model_prompt)
+        print("\nAI Enhanced Prompt:")
+        print(ai_response)
 
 
 if __name__ == "__main__":
